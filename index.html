@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STORE Productos VENIER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700&family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+/>
+<link rel="stylesheet" href="style.css">
+<header>
+<div class="logoimg">
+    <img src="img/logovenier.png" alt="Logo Venier">
+</div>
+
+<h1>STORE Productos VENIER</h1>
+<div class="container_icono">
+    <div class="conteiner_cart_icono">
+    </div>
+</header>
+<body>
+    <section class="ocultar">
+        <h1>
+          <span id="cantidadProductos">0</span>
+        </h1>
+        <div id="carrito">
+        </div>
+        <h3>TOTAL: $ <span id="totalCarrito">0</span> </h3>
+       
+        
+    </section>
+<main>
+    <form id="formBuscar">
+        <input type="text" id="inputBuscar" value="" placeholder="Buscar producto..."/>
+    </form>
+    <div id="productos">
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Toastify -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+   
+<script src="app.js"></script>
+</body>
+</html>
