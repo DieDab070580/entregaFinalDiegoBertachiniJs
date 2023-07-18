@@ -177,7 +177,7 @@ section h1 {
   .info {
     border-radius: 10px;
   }
-a{
+  a{
     text-decoration: none;
     display: flex;
     flex-direction: column;
@@ -186,3 +186,20 @@ a{
     font-size: 15px;
     transition: 1s all;
 }
+
+#categorias {
+  padding-bottom: 20px;
+}
+#categorias li {
+  list-style: none;
+  display: inline-block;
+}
+#categorias li .btn {
+  display: inline-block;
+}
+#categorias li .btn:hover,
+#categorias li .btn.seleccionado {
+  background-color: rgb(107, 107, 107);
+  transition: background-color 0.4s;
+}
+

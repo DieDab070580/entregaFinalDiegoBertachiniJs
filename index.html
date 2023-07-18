@@ -31,13 +31,22 @@
        
         
     </section>
-<main>
-    <form id="formBuscar">
-        <input type="text" id="inputBuscar" value="" placeholder="Buscar producto..."/>
-    </form>
-    <div id="productos">
-    </div>
-</main>
+    <main>
+        <input type="text" id="inputBuscar" value="" placeholder="Buscar producto..." />
+        <ul id="categorias">
+          <li><a href="#" class="btn seleccionado" id="btnTodos">Todos</a></li>
+          <li><a href="#" class="btn btnCategoria">Impermeabilizante</a></li>
+          <li><a href="#" class="btn btnCategoria">Revestimiento</a></li>
+          <li><a href="#" class="btn btnCategoria">Látex</a></li>
+          <li><a href="#" class="btn btnCategoria">Esmalte Sintético</a></li>
+          <li><a href="#" class="btn btnCategoria">Protector de Ladrillos</a></li>
+          <li><a href="#" class="btn btnCategoria">Pintura para Piscina</a></li>
+          <li><a href="#" class="btn btnCategoria">Pintura demarcación Vial</a></li>
+        </ul>
+        <div id="productos">
+          <!-- Acá van a ir los productos que tengamos en la base de datos -->
+        </div>
+      </main>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Toastify -->

@@ -1,0 +1,77 @@
+[
+    {
+        "id": 1,
+        "nombre": "Supercapa",
+        "precio": 9990,
+        "categoria": "Impermeabilizante",
+        "imagen": "supercapavenier.jpg"
+    },
+
+    {
+        "id": 2,
+        "nombre": "Texturas",
+        "precio": 4490,
+        "categoria": "Revestimiento",
+        "imagen": "texturasvenier.jpg"
+    },
+
+    {
+        "id": 3,
+        "nombre": "Látex int - ext Dessutol",
+        "precio": 5275,
+        "categoria": "Látex",
+        "imagen": "latexintextdessutolvenier.jpg"
+    },
+ 
+    {
+        "id": 4,
+        "nombre": "Látex int-ext Dessutol Pro",
+        "precio": 4525,
+        "categoria": "Látex",
+        "imagen": "latexprointextdessutolvenier.jpg"
+    },
+
+    {
+        "id": 5,
+        "nombre": "Doctor Ox Satinado",
+        "precio": 12100,
+        "categoria": "Esmalte Sintético",
+        "imagen": "doctoroxsatinadovenier.jpg"
+    },
+
+    {
+        "id": 6,
+        "nombre": "Colormell",
+        "precio": 10550,
+        "categoria": "Esmalte Sintético",
+        "imagen": "colormellvenier.jpg"
+    },
+
+    {
+        "id": 7,
+        "nombre": "Ladrillos",
+        "precio": 6550,
+        "categoria": "Protector de Ladrillos",
+        "imagen": "ladrillosvenier.jpg"
+    },
+
+    {
+        "id": 8,
+        "nombre": "Piscina base caucho",
+        "precio": 8800,
+        "categoria": "Pintura para Piscina",
+        "imagen": "piscinabasecaucho.jpg"
+    },
+
+    {
+        "id": 9,
+        "nombre": "Pintura Vial",
+        "precio": 12500,
+        "categoria": "Pintura para demarcación Vial",
+        "imagen": "vialvenier.jpg"
+    }
+]
+
+   
+
+

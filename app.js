@@ -1,11 +1,3 @@
-/*
-Objetivos de la tercer pre-entrega:
-- Usar el DOM ✅
-- Usar eventos ✅
-- Usar storage ✅
-- (Modo PRO) Simular una base de datos ✅
-- (Modo DIOS) Hacer un buscador ✅
-*/
 // Clase "molde" para los productos
 class Producto {
   constructor(id, nombre, precio, categoria, imagen = false) {
@@ -16,46 +8,44 @@ class Producto {
     this.imagen = imagen;
   }
 }
+
 // Esta clase va a simular una base de datos. Vamos a cargar todos los productos
 // de nuestro e-commerce.
 class BaseDeDatos {
   constructor() {
     // Array de la base de datos
     this.productos = [];
-    // Con una simple línea de código, vamos a ir cargando todos los productos que tengamos
-    this.agregarRegistro(1, "Supercapa", 9990, "Impermeabilizante", "supercapavenier.jpg");
-    this.agregarRegistro(2, "Texturas", 4490, "Revestimiento", "texturasvenier.jpg");
-    this.agregarRegistro(3, "Látex int - ext Dessutol", 5275, "Látex", "latexintextdessutolvenier.jpg");
-    this.agregarRegistro(4, "Látex int-ext Dessutol Pro", 4525, "Látex", "latexprointextdessutolvenier.jpg");
-    this.agregarRegistro(5, "Doctor Ox Satinado", 12100, "Esmalte Sintético + Convertidor", "doctoroxsatinadovenier.jpg");
-    this.agregarRegistro(6, "Colormell", 10550, "Esmalte Sintético + Antióxido", "colormellvenier.jpg");
-    this.agregarRegistro(7, "Ladrillos", 6550, "Protector de Ladrillos", "ladrillosvenier.jpg");
-    this.agregarRegistro(8, "Piscina base caucho", 8800, "Pintura para Piscinas", "piscinabasecaucho.jpg");
-    this.agregarRegistro(9, "Pintura Vial", 12500, "pintura para demarcación vial", "vialvenier.jpg");
   }
-  // Método que crea el objeto producto y lo almacena en el array con un push
-  agregarRegistro(id, nombre, precio, categoria, imagen = false) {
-    const producto = new Producto(id, nombre, precio, categoria, imagen);
-    this.productos.push(producto);
-  }
-  // Nos retorna el array con todos los productos de la base de datos
-  traerRegistros() {
+
+  // Nos retorna el array con todos los productos que tiene el archivo JSON
+  async traerRegistros() {
+    const response = await fetch("./productos.json");
+    this.productos = await response.json();
     return this.productos;
   }
+
   // Busca un producto por ID, si lo encuentra lo retorna en forma de objeto
   // A tener en cuenta: Los IDs son únicos, debe haber uno solo por producto para evitar errores
   registroPorId(id) {
     return this.productos.find((producto) => producto.id === id);
   }
+
   // Retorna una lista (array) de productos que incluyan en el nombre los caracteres
   // que le pasamos por parámetro. Si le pasamos "a" como parámetro, va a buscar y
   // devolver todos los productos que tengan la letra "a" en el nombre del producto
   registrosPorNombre(palabra) {
     return this.productos.filter((producto) => producto.nombre.toLowerCase().includes(palabra));
   }
+
+  // Similar a registrosPorNombre, pero filtra los productos por categoría
+  registrosPorCategoria(categoria) {
+    return this.productos.filter((producto) => producto.categoria == categoria);
+  }
 }
+
 // Objeto de la base de datos
 const bd = new BaseDeDatos();
+
 // Elementos
 const divProductos = document.querySelector("#productos");
 const divCarrito = document.querySelector("#carrito");
@@ -64,9 +54,44 @@ const spanTotalCarrito = document.querySelector("#totalCarrito");
 const inputBuscar = document.querySelector("#inputBuscar");
 const botonCarrito = document.querySelector("section h1");
 const botonComprar = document.querySelector("#botonComprar");
+const botonesCategorias = document.querySelectorAll(".btnCategoria");
+
+// Botones para filtrar productos por categoría
+botonesCategorias.forEach((boton) => {
+  boton.addEventListener("click", (event) => {
+    event.preventDefault();
+    quitarClase();
+    boton.classList.add("seleccionado");
+    const productosPorCategoria = bd.registrosPorCategoria(boton.innerText);
+    cargarProductos(productosPorCategoria);
+  });
+});
+
+const botonTodos = document.querySelector("#btnTodos");
+botonTodos.addEventListener("click", (event) => {
+  event.preventDefault();
+  quitarClase();
+  botonTodos.classList.add("seleccionado");
+  // En el botón Todos no usamos asincronismo, sino que directamente
+  // cargamos lo que ya cargó previamente la primera vez que llamamos
+  // al fetch
+  cargarProductos(bd.productos);
+});
+
+// Esta clase busca algún botón que ya tenga la clase "seleccionado"
+// y le remueve la clase, quedando así todos los botones sin estar
+// seleccionados
+function quitarClase() {
+  const botonSeleccionado = document.querySelector(".seleccionado");
+  if (botonSeleccionado) {
+    botonSeleccionado.classList.remove("seleccionado");
+  }
+}
+
 // Llamamos a la función regular cargarProductos, le pasamos como parámetro
 // el método de la base de datos que trae todos los productos
-cargarProductos(bd.traerRegistros());
+bd.traerRegistros().then((productos) => cargarProductos(productos));
+
 // Esta función regular recibe como parámetro un array de productos y se encarga
 // de renderizarlos en el HTML
 function cargarProductos(productos) {
@@ -83,7 +108,6 @@ function cargarProductos(productos) {
             <div class="imagen">
               <img src="img/${producto.imagen}" />
             </div>
-            <a href="#" class="btnAgregar" data-id="${producto.id}">Agregar al carrito</a>
             <a href="#" class="btn btnAgregar" data-id="${producto.id}">Agregar al carrito</a>
         </div>
     `;
@@ -104,6 +128,7 @@ function cargarProductos(productos) {
     });
   }
 }
+
 // Clase carrito, para manipular los productos de nuestro carrito
 class Carrito {
   constructor() {
@@ -117,6 +142,7 @@ class Carrito {
     // renderice todos los productos que haya en el storage
     this.listar();
   }
+
   // Método para agregar el producto al carrito
   agregar(producto) {
     // Si el producto está en el carrito, lo guardo en esta variable
@@ -143,11 +169,13 @@ class Carrito {
       },
     }).showToast();
   }
+
   // Verificamos si el producto está en el carrito. Usamos desectruración en el parámetro:
   // recibimos el objeto producto en el parámetro pero solo usamos la propiedad id
   estaEnCarrito({ id }) {
     return this.carrito.find((producto) => producto.id === id);
   }
+
   // Este método es el encargado de actualizar el HTML de nuestro carrito
   listar() {
     // Reiniciamos las variables
@@ -164,7 +192,6 @@ class Carrito {
             <h2>${producto.nombre}</h2>
             <p>$${producto.precio}</p>
             <p>Cantidad: ${producto.cantidad}</p>
-            <a href="#" data-id="${producto.id}" class="btnQuitar">Quitar del carrito</a>
             <a href="#" data-id="${producto.id}" class="btn btnQuitar">Quitar del carrito</a>
         </div>
     `;
@@ -194,6 +221,7 @@ class Carrito {
     spanCantidadProductos.innerText = this.totalProductos;
     spanTotalCarrito.innerText = this.total;
   }
+
   // Método para quitar o restar productos del carrito
   quitar(id) {
     // Recibimos como parámetro el ID del producto, con ese ID buscamos el índice
@@ -211,6 +239,7 @@ class Carrito {
     // Actualizo el carrito en el HTML
     this.listar();
   }
+
   // Método para vaciar el carrito
   vaciar() {
     this.carrito = [];
@@ -218,6 +247,7 @@ class Carrito {
     this.listar();
   }
 }
+
 // Buscador: al soltar una tecla se ejecuta el evento keyup
 inputBuscar.addEventListener("keyup", () => {
   // Obtenemos el atributo value del input
@@ -228,10 +258,12 @@ inputBuscar.addEventListener("keyup", () => {
   // Lo mostramos en el HTML
   cargarProductos(productosEncontrados);
 });
+
 // Toggle para ocultar/mostrar el carrito
 botonCarrito.addEventListener("click", () => {
   document.querySelector("section").classList.toggle("ocultar");
 });
+
 // Mensaje de compra realizada con la librería Sweet Alert
 botonComprar.addEventListener("click", (event) => {
   event.preventDefault();
@@ -246,6 +278,7 @@ botonComprar.addEventListener("click", (event) => {
   // Ocultamos el carrito en el HTML
   document.querySelector("section").classList.add("ocultar");
 });
+
 // Objeto carrito: lo instanciamos a lo último de nuestro archivo JavaScript
 // para asegurarnos que TODO esté declarado e inicializado antes de crear el carrito
 const carrito = new Carrito();
