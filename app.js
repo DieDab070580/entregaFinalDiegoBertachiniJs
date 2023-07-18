@@ -1,4 +1,3 @@
-// Clase "molde" para los productos
 class Producto {
   constructor(id, nombre, precio, categoria, imagen = false) {
     this.id = id;
@@ -23,14 +22,6 @@ class BaseDeDatos {
     this.productos = await response.json();
     return this.productos;
   }
-
-          agregarRegistro(id, nombre, precio, categoria, imagen) {
-            const producto = new Producto(id, nombre, precio, categoria, imagen);
-            this.productos.push(producto);}
-            
-            traerRegistros() {
-              return this.productos;
-            }
 
   // Busca un producto por ID, si lo encuentra lo retorna en forma de objeto
   // A tener en cuenta: Los IDs son únicos, debe haber uno solo por producto para evitar errores
@@ -99,7 +90,7 @@ function quitarClase() {
 // Llamamos a la función regular cargarProductos, le pasamos como parámetro
 // el método de la base de datos que trae todos los productos
 bd.traerRegistros().then((productos) => cargarProductos(productos));
-            cargarProductos(bd.traerRegistros());
+
 // Esta función regular recibe como parámetro un array de productos y se encarga
 // de renderizarlos en el HTML
 function cargarProductos(productos) {
@@ -173,7 +164,7 @@ class Carrito {
       className: "info",
       gravity: "bottom",
       style: {
-        background: "linear-gradient(to right, blue, red)",
+        background: "linear-gradient(to right, black, red)",
       },
     }).showToast();
   }
@@ -257,19 +248,18 @@ class Carrito {
 }
 
 // Buscador: al soltar una tecla se ejecuta el evento keyup
-inputBuscar.addEventListener("keyup", (event) => {
-  event.preventDefault();
+inputBuscar.addEventListener("keyup", () => {
   // Obtenemos el atributo value del input
   const palabra = inputBuscar.value;
   // Pedimos a nuestra base de datos que nos traiga todos los registros
   // que coincidan con la palabra que pusimos en nuestro input
-  const productos = bd.registrosPorNombre(palabra.toLowerCase());
+  const productosEncontrados = bd.registrosPorNombre(palabra.toLowerCase());
   // Lo mostramos en el HTML
-  cargarProductos(productos);
+  cargarProductos(productosEncontrados);
 });
 
 // Toggle para ocultar/mostrar el carrito
-botonCarrito.addEventListener("click", (event) => {
+botonCarrito.addEventListener("click", () => {
   document.querySelector("section").classList.toggle("ocultar");
 });
 
