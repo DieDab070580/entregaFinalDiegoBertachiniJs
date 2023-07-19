@@ -164,7 +164,7 @@ class Carrito {
       className: "info",
       gravity: "bottom",
       style: {
-        background: "linear-gradient(to right, black, red)",
+        background: "linear-gradient(to right, grey, rgb(107, 107, 107))",
       },
     }).showToast();
   }
