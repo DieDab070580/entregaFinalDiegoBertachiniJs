@@ -202,4 +202,25 @@ section h1 {
   background-color: rgb(107, 107, 107);
   transition: background-color 0.4s;
 }
-
+/* SCROLL CONTAINER */
+.scroll-container {
+  overflow: scroll;
+  height: 300px;
+  width: auto;
+  overflow-x: hidden;
+}
+.scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #d6d0d0;
+}
+/* Handle on hover */
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgb(160, 139, 139);
+}
